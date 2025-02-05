@@ -16,5 +16,3 @@ tasks:
   run:
     cmds:
       - docker-compose up --build
-
-  
