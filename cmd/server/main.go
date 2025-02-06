@@ -6,6 +6,7 @@ import (
 
 	"github.com/akmalsulaymonov/production-service-go/internal/comment"
 	"github.com/akmalsulaymonov/production-service-go/internal/db"
+	transportHttp "github.com/akmalsulaymonov/production-service-go/internal/transport/http"
 )
 
 // Rin - is going to be responsible for
@@ -32,19 +33,26 @@ func Run() error {
 	// comment service
 	cmtService := comment.NewService(db)
 
-	// post a commnet
-	insCmt, _ := cmtService.PostComment(
-		context.Background(), comment.Comment{
-			Slug:   "manual-test",
-			Author: "Abdulaziz",
-			Body:   "Do your homework!",
-		},
-	)
-	fmt.Println(insCmt)
-	fmt.Println(insCmt.ID)
+	httpHandler := transportHttp.NewHandler(cmtService)
+	if err := httpHandler.Serve(); err != nil {
+		return err
+	}
 
-	// get comment by ID
-	fmt.Println(cmtService.GetComment(context.Background(), "601fbfe6-3089-4e00-93a5-b6a27a785e6e"))
+	/*
+		// post a commnet
+		insCmt, _ := cmtService.PostComment(
+			context.Background(), comment.Comment{
+				Slug:   "manual-test",
+				Author: "Abdulaziz",
+				Body:   "Do your homework!",
+			},
+		)
+		fmt.Println(insCmt)
+		fmt.Println(insCmt.ID)
+
+		// get comment by ID
+		fmt.Println(cmtService.GetComment(context.Background(), "601fbfe6-3089-4e00-93a5-b6a27a785e6e"))
+	*/
 
 	return nil
 }
