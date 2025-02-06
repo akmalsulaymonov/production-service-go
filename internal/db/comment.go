@@ -73,7 +73,7 @@ func (d *Database) UpdateComment(ctx context.Context, id string, cmt comment.Com
 		Author: sql.NullString{String: cmt.Author, Valid: true},
 		Body:   sql.NullString{String: cmt.Body, Valid: true},
 	}
-	rows, err := d.Client.NamedQueryContext(ctx, `UPDATE comments SET slug = :slug, author = :author, body = :body WHERE id = :id)`, cmtRow)
+	rows, err := d.Client.NamedQueryContext(ctx, `UPDATE comments SET slug = :slug, author = :author, body = :body WHERE id = :id`, cmtRow)
 	if err != nil {
 		return comment.Comment{}, fmt.Errorf("failed to update a comment: %w", err)
 	}
