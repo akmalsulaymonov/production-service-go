@@ -36,6 +36,7 @@ func (h *Handler) PostComment(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(cmt); err != nil {
 		panic(err)
 	}
+
 }
 
 func (h *Handler) GetComment(w http.ResponseWriter, r *http.Request) {
@@ -56,6 +57,7 @@ func (h *Handler) GetComment(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(cmt); err != nil {
 		panic(err)
 	}
+
 }
 
 func (h *Handler) UpdateComment(w http.ResponseWriter, r *http.Request) {
@@ -81,6 +83,7 @@ func (h *Handler) UpdateComment(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(cmt); err != nil {
 		panic(err)
 	}
+
 }
 
 func (h *Handler) DeleteComment(w http.ResponseWriter, r *http.Request) {
@@ -101,4 +104,5 @@ func (h *Handler) DeleteComment(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(Response{Message: "Successfully deleted"}); err != nil {
 		panic(err)
 	}
+
 }
