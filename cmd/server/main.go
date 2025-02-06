@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/akmalsulaymonov/production-service-go/internal/comment"
 	"github.com/akmalsulaymonov/production-service-go/internal/db"
 )
 
@@ -27,6 +28,23 @@ func Run() error {
 	}
 
 	fmt.Println("successfully connected and pinged database")
+
+	// comment service
+	cmtService := comment.NewService(db)
+
+	// post a commnet
+	insCmt, _ := cmtService.PostComment(
+		context.Background(), comment.Comment{
+			Slug:   "manual-test",
+			Author: "Abdulaziz",
+			Body:   "Do your homework!",
+		},
+	)
+	fmt.Println(insCmt)
+	fmt.Println(insCmt.ID)
+
+	// get comment by ID
+	fmt.Println(cmtService.GetComment(context.Background(), "601fbfe6-3089-4e00-93a5-b6a27a785e6e"))
 
 	return nil
 }
